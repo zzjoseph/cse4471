@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,16 +14,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-=======
 import android.view.View;
 import android.widget.Button;
->>>>>>> 39c4ad33d9daa5194cb96cc57ab94962386bc02a
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-<<<<<<< HEAD
 import java.sql.BatchUpdateException;
 import java.util.List;
 
@@ -34,12 +30,6 @@ public class ReaderActivity extends AppCompatActivity {
     private LayoutInflater layoutInflater;
     private RelativeLayout relativeLayout;
 
-
-
-=======
-public class ReaderActivity extends AppCompatActivity {
-    private Button scan_btn;
->>>>>>> 39c4ad33d9daa5194cb96cc57ab94962386bc02a
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +48,6 @@ public class ReaderActivity extends AppCompatActivity {
                 integrator.initiateScan();
             }
         });
-<<<<<<< HEAD
 
         scan_history = (Button) findViewById(R.id.scan_history);
         scan_history.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +57,6 @@ public class ReaderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-=======
->>>>>>> 39c4ad33d9daa5194cb96cc57ab94962386bc02a
     }
 
     @Override
@@ -86,7 +73,6 @@ public class ReaderActivity extends AppCompatActivity {
         else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-<<<<<<< HEAD
 
         // malicious website
         relativeLayout = (RelativeLayout) findViewById(R.id.activity_reader);
@@ -102,7 +88,5 @@ public class ReaderActivity extends AppCompatActivity {
                 return true;
             }
         });
-=======
->>>>>>> 39c4ad33d9daa5194cb96cc57ab94962386bc02a
     }
 }

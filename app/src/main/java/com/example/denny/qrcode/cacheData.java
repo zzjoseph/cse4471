@@ -31,7 +31,7 @@ public class cacheData {
 		return _webname;
 	}
 
-	public boolean get_malicious() {
+	public String get_malicious() {
 		return _malicious;
 	}
 }

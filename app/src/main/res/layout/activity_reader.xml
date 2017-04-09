@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-=======
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> 39c4ad33d9daa5194cb96cc57ab94962386bc02a
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_reader"
     android:layout_width="match_parent"
@@ -20,17 +15,13 @@
         android:layout_height="wrap_content"
         android:text="QRCode Scanner"
         android:textSize="25dp"
-<<<<<<< HEAD
         android:textColor="@color/colorPrimary"
-=======
->>>>>>> 39c4ad33d9daa5194cb96cc57ab94962386bc02a
         android:layout_centerHorizontal="true"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-<<<<<<< HEAD
         android:background="@drawable/scan"
         android:id="@+id/scan_btn"/>
 
@@ -42,9 +33,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
         android:id="@+id/scan_history" />
-
-=======
         android:text="SCAN"
         android:id="@+id/scan_btn"/>
->>>>>>> 39c4ad33d9daa5194cb96cc57ab94962386bc02a
 </RelativeLayout>

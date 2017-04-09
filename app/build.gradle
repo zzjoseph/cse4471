@@ -28,4 +28,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.google.zxing:core:3.3.0'
     compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+    compile files('libs/opencsv-3.9.jar')
+    compile files('libs/commons-lang3-3.5.jar')
 }

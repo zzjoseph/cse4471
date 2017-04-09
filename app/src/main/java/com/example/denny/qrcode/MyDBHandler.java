@@ -28,13 +28,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 		db.execSQL("DROP TABLE IF EXISTS" + TABLE_CACHE);
-		onCeate(db);
+		onCreate(db);
 	}
 
 	//Add a row to the db
 	public void addCache(cacheData cache){
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_WEB, cacheData.get_webname());
+		values.put(COLUMN_WEB, cache.get_webname());
 		SQLiteDatabase db = getWritableDatabase();
 		db.insert(TABLE_CACHE, null, values);
 		db.close();
@@ -44,5 +44,25 @@ public class MyDBHandler extends SQLiteOpenHelper{
 	public void deleteCache(String webname){
 		SQLiteDatabase db = getWritableDatabase();
 		db.execSQL("DELETE FROM " +  TABLE_CACHE + " WHERE " + COLUMN_WEB + "=\"" + webname + "\";");
+	}
+
+	//Print db as sting
+	public String dbString(){
+		String dbString = "";
+		SQLiteDatabase db = getWritableDatabase();
+		String query = "SELECT * FROM " + TABLE_CACHE + "WHERE 1";
+
+		Cursor cur = db.rawQuery(query, null);
+		cur.moveToFirst();
+
+		while(!cur.isAfterLast()){
+			if(cur.getString(cur.getColumnIndex("webname"))!=null){
+				dbString += cur.getString(cur.getColumnIndex("webname"));
+				dbString += "\n";
+			}
+		}
+
+		db.close();
+		return dbString();
 	}
 }

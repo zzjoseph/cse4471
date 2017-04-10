@@ -66,5 +66,30 @@ public class MyDBHandler extends SQLiteOpenHelper{
 		db.close();
 		return dbString();
 	}
+	
+	//Returns if website is in cache and status of website if in cache.
+	//0, not in cache, 1 unknown, 2 safe, 3 unsafe
+	public int isInTable(String website){
+		int ans;
+		SQLiteDatabase db = getReadableDatabase();
+		String query = "SELECT * FROM " + TABLE_CACHE + " WHERE " + COLUMN_WEB + " = " + website;
+		Cursor cur = db.rawQuery(query, null);
+		if(cur == null){
+			ans = 0;
+		}
+		else{
+			String stat = cur.getString(cur.getColumnIndex("malicious"));
+			if(stat.equals("unknown")){
+				ans = 1;
+			}
+			else if(stat.equals("safe")){
+				ans = 2;
+			}
+			else{
+				ans = 3;
+			}
+		}
+		return ans;
+	}
 }
 

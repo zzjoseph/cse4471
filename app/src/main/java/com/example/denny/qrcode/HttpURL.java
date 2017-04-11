@@ -78,4 +78,10 @@ public class HttpURL {
             return ans;
         }
     }
+    
+    public String parseURL(URL url) {
+        String webname = url.getHost();
+        String website = "www." + webname;
+        return website;
+    }
 }

@@ -25,7 +25,10 @@ public class HttpURL {
 
     //Sends an HTTP Get request to the api, and receives answer
     public void get(String webSite) throws Exception {
-
+        if(!webSite.contains("www.")){
+            webSite = "www." + webSite;
+        }
+        
         System.out.println(webSite);
 
         String url = "http://api.mywot.com/0.4/public_link_json2?hosts=" + webSite + "/&callback=process&key=55c2be73f4b425000dce3874caa04feedf25e417";
@@ -81,7 +84,7 @@ public class HttpURL {
     
     public String parseURL(URL url) {
         String webname = url.getHost();
-        String website = "www." + webname;
+        String website = webname;
         return website;
     }
 }

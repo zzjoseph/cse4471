@@ -126,14 +126,14 @@ public class DecisionTreeNode {
         newAttributes.remove(bestAttr);
 
         DecisionTreeNode node = new DecisionTreeNode(DecisionTreeNode.attributes[bestAttr], numTEXT, numURL, numEMAIL, numCONTACT);
-
-        System.out.println("--------------------------------------");
-        System.out.println("numText: " + numTEXT);
-        System.out.println("numURL: " + numURL);
-        System.out.println("numEMAIL: " + numEMAIL);
-        System.out.println("numCONTACT: " + numCONTACT);
-        System.out.println("Attribute: " + attributes[bestAttr]);
-        System.out.println("--------------------------------------\n\n\n\n\n");
+//
+//        System.out.println("--------------------------------------");
+//        System.out.println("numText: " + numTEXT);
+//        System.out.println("numURL: " + numURL);
+//        System.out.println("numEMAIL: " + numEMAIL);
+//        System.out.println("numCONTACT: " + numCONTACT);
+//        System.out.println("Attribute: " + attributes[bestAttr]);
+//        System.out.println("--------------------------------------\n\n\n\n\n");
 
         int trueSize = trueInputs.size();
         int falseSize = falseInputs.size();

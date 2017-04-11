@@ -33,6 +33,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
         android:id="@+id/scan_history" />
-        android:text="SCAN"
-        android:id="@+id/scan_btn"/>
+        />
 </RelativeLayout>

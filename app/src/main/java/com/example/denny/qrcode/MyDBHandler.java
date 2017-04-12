@@ -22,7 +22,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db){
-		String query = "CREATE TABLE" + "TABLE_CACHE" + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COLUMN_WEB + "TEXT " + COLUMN_MAL + " TEXT " + ");";
+		String query = "CREATE TABLE " + "TABLE_CACHE" + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WEB + "TEXT, " + COLUMN_MAL + " TEXT " + ");";
 		db.execSQL(query);
 	}
 
@@ -72,7 +72,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 	public int isInTable(String website){
 		int ans;
 		SQLiteDatabase db = getReadableDatabase();
-		String query = "SELECT * FROM " + TABLE_CACHE + " WHERE " + COLUMN_WEB + " = " + website;
+		String query = "SELECT * FROM " + TABLE_CACHE + " WHERE " + COLUMN_WEB + " = \"" + website + "\";";
 		Cursor cur = db.rawQuery(query, null);
 		if(cur == null){
 			ans = 0;

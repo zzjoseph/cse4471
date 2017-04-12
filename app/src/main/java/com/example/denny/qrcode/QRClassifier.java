@@ -59,16 +59,16 @@ public class QRClassifier {
         return this.decisionTree.decide(input);
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        QRClassifier qr = new QRClassifier();
-        qr.train();
-
-        System.out.println(qr.classify("https://google.com"));
-        System.out.println(qr.classify("http://weixin.qq.com/r/56EHH2DE-z2ArSR89-T1"));
-        System.out.println(qr.classify("The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed,"));
-        System.out.println(qr.classify("Mailto:871239928@qq.com;SUB:http;Body: hey\nhttp represents hypertext transfer protocol"));
-
-        qr.decisionTree.dump();
-
-    }
+//    public static void main(String[] args) throws IOException, ClassNotFoundException {
+//        QRClassifier qr = new QRClassifier();
+//        qr.train();
+//
+//        System.out.println(qr.classify("https://google.com"));
+//        System.out.println(qr.classify("http://weixin.qq.com/r/56EHH2DE-z2ArSR89-T1"));
+//        System.out.println(qr.classify("The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed,"));
+//        System.out.println(qr.classify("Mailto:871239928@qq.com;SUB:http;Body: hey\nhttp represents hypertext transfer protocol"));
+//
+//        qr.decisionTree.dump();
+//
+//    }
 }

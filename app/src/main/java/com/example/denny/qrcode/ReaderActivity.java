@@ -38,6 +38,7 @@ public class ReaderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Debug", "oncreate called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reader);
         scan_btn = (Button) findViewById(R.id.scan_btn);
@@ -75,6 +76,7 @@ public class ReaderActivity extends AppCompatActivity {
         node1.setChildren(node2, node3);
         node3.setChildren(node4, node5);
         node5.setChildren(node6, node7);
+        this.classifier = new QRClassifier();
         this.classifier.setTree(node1);
     }
 
@@ -94,6 +96,7 @@ public class ReaderActivity extends AppCompatActivity {
                     MyDBHandler dbHandler = new MyDBHandler(this, null, null, 0);
                     if(dbHandler.isInTable(tag) == 0) {
                         // use api to check if url is safe
+                        // add corresponding entry in the database
                     } else if(dbHandler.isInTable(tag) == 1) {
                         Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
                     } else if(dbHandler.isInTable(tag) == 2) {
@@ -114,18 +117,18 @@ public class ReaderActivity extends AppCompatActivity {
         }
 
         // malicious website
-        relativeLayout = (RelativeLayout) findViewById(R.id.activity_reader);
-        layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.popup,null);
-        popupWindow =  new PopupWindow(container,590,400,true);
-        popupWindow.showAtLocation(relativeLayout, Gravity.NO_GRAVITY,500,500);
-
-        container.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
+//        relativeLayout = (RelativeLayout) findViewById(R.id.activity_reader);
+//        layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+//        ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.popup,null);
+//        popupWindow =  new PopupWindow(container,590,400,true);
+//        popupWindow.showAtLocation(relativeLayout, Gravity.NO_GRAVITY,500,500);
+//
+//        container.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                popupWindow.dismiss();
+//                return true;
+//            }
+//        });
     }
 }

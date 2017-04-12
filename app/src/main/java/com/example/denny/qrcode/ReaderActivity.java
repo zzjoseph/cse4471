@@ -68,6 +68,8 @@ public class ReaderActivity extends AppCompatActivity {
             }
             else {
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                QRClassifier classifier = new QRClassifier();
+
             }
         }
         else {

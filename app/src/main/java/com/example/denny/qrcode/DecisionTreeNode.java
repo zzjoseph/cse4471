@@ -45,7 +45,7 @@ public class DecisionTreeNode {
     private int numCONTACT;
 
     public DecisionTreeNode(String attribute, int numTEXT, int numURL, int numEMAIL, int numCONTACT) {
-        this.pattern = attribute == null ?  null : Pattern.compile(attribute);
+        this.pattern = attribute == null ?  null : Pattern.compile(attribute, Pattern.CASE_INSENSITIVE);
         this.numTEXT = numTEXT;
         this.numURL = numURL;
         this.numEMAIL = numEMAIL;
@@ -264,4 +264,35 @@ public class DecisionTreeNode {
             }
         }
     }
+
+//    public String dumpJson() {
+//        if(this.pattern == null) {
+//            return "{\n" +
+//                    "\troot: [\n" +
+//                    "\t\t\"\",\n" +
+//                    "\t\t\"" + this.numTEXT + "\"\n" +
+//                    "\t\t\"" + this.numURL + "\"\n" +
+//                    "\t\t\"" + this.numEMAIL + "\"\n" +
+//                    "\t\t\"" + this.numCONTACT + "\"\n" +
+//                    "\t],\n" +
+//                    "\tchildren: []\n" +
+//                    "}";
+//        } else {
+//            String result = "{\n" +
+//                    "\troot: [\n" +
+//                    "\t\t\"" + this.pattern.pattern() + "\",\n" +
+//                    "\t\t\"" + this.numTEXT + "\"\n" +
+//                    "\t\t\"" + this.numURL + "\"\n" +
+//                    "\t\t\"" + this.numEMAIL + "\"\n" +
+//                    "\t\t\"" + this.numCONTACT + "\"\n" +
+//                    "\t],\n";
+//            String trueChildString = this.trueChild.dumpJson();
+//            String falseChildString = this.falseChild.dumpJson();
+//            return result +
+//                    "\tchildren: [\n" +
+//                    "\t" + trueChildString +
+//                    ",\n\t" + falseChildString +
+//                    "\t\n]\n}";
+//        }
+//    }
 }

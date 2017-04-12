@@ -11,27 +11,86 @@
     tools:context="com.example.denny.qrcode.ReaderActivity">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QRCode Scanner"
-        android:textSize="25dp"
-        android:textColor="@color/colorPrimary"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:text="QR WALL"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="25dp" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:background="@drawable/scan"
-        android:id="@+id/scan_btn"/>
+        android:id="@+id/scan_btn"
+        android:layout_marginBottom="42dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp"
+        android:layout_above="@+id/button"
+        android:layout_toLeftOf="@+id/scan_history"
+        android:layout_toStartOf="@+id/scan_history" />
+
+    <TextView
+        android:id="@+id/WhiteList_W"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WhiteList"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/scan_history"
+        android:layout_alignLeft="@+id/Scan_W"
+        android:layout_alignStart="@+id/Scan_W" />
+
+    <TextView
+        android:id="@+id/Scan_W"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="StartScan"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="70dp"
+        android:layout_alignTop="@+id/scan_btn"
+        android:layout_alignRight="@+id/scan_btn"
+        android:layout_alignEnd="@+id/scan_btn" />
+
+    <TextView
+        android:id="@+id/History_W"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="History"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/scan_history"
+        android:layout_alignLeft="@+id/scan_history"
+        android:layout_alignStart="@+id/scan_history"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp" />
 
     <Button
-        android:text="Scan History"
+        android:id="@+id/scan_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/history"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="34dp"
+        android:layout_marginEnd="34dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/whitelist"
+        android:layout_marginBottom="112dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:id="@+id/scan_history" />
-        />
+        android:layout_alignRight="@+id/Scan_W"
+        android:layout_alignEnd="@+id/Scan_W" />
+    />
 </RelativeLayout>

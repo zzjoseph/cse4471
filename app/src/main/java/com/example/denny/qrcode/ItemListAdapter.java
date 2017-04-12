@@ -41,9 +41,9 @@ public class ItemListAdapter extends BaseAdapter {
         View v = View.inflate(context, R.layout.list_item,null);
         TextView tvName = (TextView)v.findViewById(R.id.item_name);
 
-        tvName.setText(itemList.get(position).getName());
+        tvName.setText(itemList.get(position).getUrl());
 
-        v.setTag(itemList.get(position).getName());
+        v.setTag(itemList.get(position).getUrl());
 
         return v;
     }

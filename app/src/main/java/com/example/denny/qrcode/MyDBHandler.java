@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
+import android.util.Log;
 
 public class MyDBHandler extends SQLiteOpenHelper{
 
@@ -22,7 +23,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db){
-		String query = "CREATE TABLE " + "TABLE_CACHE" + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WEB + "TEXT, " + COLUMN_MAL + " TEXT " + ");";
+		Log.d("Debug", "create db");
+		String query = "CREATE TABLE " + TABLE_CACHE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WEB + "TEXT, " + COLUMN_MAL + " TEXT " + ");";
 		db.execSQL(query);
 	}
 

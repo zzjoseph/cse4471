@@ -95,8 +95,18 @@ public class ReaderActivity extends AppCompatActivity {
                 if(tag.equals("URL")) {
                     MyDBHandler dbHandler = new MyDBHandler(this, null, null, 0);
                     if(dbHandler.isInTable(tag) == 0) {
+
                         // use api to check if url is safe
                         // add corresponding entry in the database
+                        HttpURL checker = new HttpURL();
+                        try {
+                            String safe = checker.get(result.getContents());
+                            cacheData cache = new cacheData(result.getContents(), safe);
+                            MyDBHandler db = new MyDBHandler(this, null ,null, 0);
+                            db.addCache(cache);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     } else if(dbHandler.isInTable(tag) == 1) {
                         Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
                     } else if(dbHandler.isInTable(tag) == 2) {
@@ -116,19 +126,5 @@ public class ReaderActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-        // malicious website
-//        relativeLayout = (RelativeLayout) findViewById(R.id.activity_reader);
-//        layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-//        ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.popup,null);
-//        popupWindow =  new PopupWindow(container,590,400,true);
-//        popupWindow.showAtLocation(relativeLayout, Gravity.NO_GRAVITY,500,500);
-//
-//        container.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                popupWindow.dismiss();
-//                return true;
-//            }
-//        });
     }
 }

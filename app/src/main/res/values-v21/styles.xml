@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Hai" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorForeground">?attr/colorAccent</item>
+        <item name="android:navigationBarColor">?attr/colorAccent</item>
+        <item name="android:statusBarColor">?android:attr/colorForeground</item>
+    </style>
+
+    <style name="h" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/H</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/H</item>
+        <item name="android:navigationBarColor">@color/H</item>
+        <item name="android:statusBarColor">@color/H</item>
+    </style>
+</resources>

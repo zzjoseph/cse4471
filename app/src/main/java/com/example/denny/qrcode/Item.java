@@ -5,18 +5,33 @@ package com.example.denny.qrcode;
  */
 
 public class Item {
-    private String name;
+    private String url;
+    private String safety;
 
-    public Item(String name) {
-        this.name = name;
+    public String getUrl() {
+        return url;
     }
 
-    public String getName() {
-        return name;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getSafety() {
+        return safety;
     }
+
+    public void setSafety(String safety) {
+        this.safety = safety;
+    }
+
+
+
+    public Item(String url, String safety) {
+        this.url = url;
+        this.safety = safety;
+    }
+
+
+
 }
 

@@ -24,7 +24,7 @@ public class HttpURL {
     }
 
     //Sends an HTTP Get request to the api, and receives answer
-    public void get(String webSite) throws Exception {
+    public String get(String webSite) throws Exception {
         if(!webSite.contains("www.")){
             webSite = "www." + webSite;
         }
@@ -51,7 +51,7 @@ public class HttpURL {
 
         //print result
         String safe = checkSafe(response.toString(), webSite);
-        System.out.println(safe);
+        return safe;
 
     }
 

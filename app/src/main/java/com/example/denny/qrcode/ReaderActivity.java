@@ -34,6 +34,8 @@ public class ReaderActivity extends AppCompatActivity {
     private LayoutInflater layoutInflater;
     private RelativeLayout relativeLayout;
 
+    private QRClassifier classifier;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,19 @@ public class ReaderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        DecisionTreeNode node1 = new DecisionTreeNode("mailto:", 4, 18, 3, 0);
+        DecisionTreeNode node2 = new DecisionTreeNode(null, 0, 0, 2, 0);
+        DecisionTreeNode node3 = new DecisionTreeNode("(SUB:.*;)|(subject)", 4, 18, 1, 0);
+        DecisionTreeNode node4 = new DecisionTreeNode(null, 0, 0, 1, 0);
+        DecisionTreeNode node5 = new DecisionTreeNode(" ", 4, 18, 0, 0);
+        DecisionTreeNode node6 = new DecisionTreeNode(null, 4, 0, 0, 0);
+        DecisionTreeNode node7 = new DecisionTreeNode(null, 0, 18, 0, 0);
+
+        node1.setChildren(node2, node3);
+        node3.setChildren(node4, node5);
+        node5.setChildren(node6, node7);
+        this.classifier.setTree(node1);
     }
 
     @Override
@@ -71,8 +86,27 @@ public class ReaderActivity extends AppCompatActivity {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
             }
             else {
-                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                QRClassifier classifier = new QRClassifier();
+                String resultText = result.getContents();
+
+
+                String tag = this.classifier.classify(result.getContents());
+                if(tag.equals("URL")) {
+                    MyDBHandler dbHandler = new MyDBHandler(this, null, null, 0);
+                    if(dbHandler.isInTable(tag) == 0) {
+                        // use api to check if url is safe
+                    } else if(dbHandler.isInTable(tag) == 1) {
+                        Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
+                    } else if(dbHandler.isInTable(tag) == 2) {
+                        Toast.makeText(this, "Safe URL: \n" + resultText, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Unsafe URL: \n" + resultText, Toast.LENGTH_LONG).show();
+                    }
+                } else if(tag.equals("TEXT")) {
+                    Toast.makeText(this, "Text: \n" + resultText, Toast.LENGTH_LONG).show();
+                } else if(tag.equals("EMAIL")) {
+                    Toast.makeText(this, "Email: \n" + resultText, Toast.LENGTH_LONG).show();
+                }
+
             }
         }
         else {

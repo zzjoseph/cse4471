@@ -1,7 +1,9 @@
 package com.example.denny.qrcode;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
 import java.sql.BatchUpdateException;
 import java.util.List;
 
@@ -69,7 +73,6 @@ public class ReaderActivity extends AppCompatActivity {
             else {
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 QRClassifier classifier = new QRClassifier();
-
             }
         }
         else {

@@ -3,6 +3,7 @@ package com.example.denny.qrcode;
 import com.opencsv.CSVReader;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
  * Created by zz on 4/8/17.
  */
 
-public class DecisionTreeNode {
+public class DecisionTreeNode implements Serializable {
     private DecisionTreeNode parent;
     private DecisionTreeNode trueChild;
     private DecisionTreeNode falseChild;
@@ -35,7 +36,7 @@ public class DecisionTreeNode {
 //    private static final int[] attributes = {ATTR_SPACE, ATTR_HTTP, ATTR_WWW, ATTR_TLD, ATTR_NAME, ATTR_ADDR, ATTR_TEL, ATTR_EMAIL, ATTR_MATMSG, ATTR_BODY, ATTR_SUB};
 
     private static final String[] attributes = {" ", "https?://", "www\\.", "(\\.com)|(\\.org)|(\\.gov)|(\\.net)|(\\.edu)",
-            "MATMSG", "SUB:.*;", "BODY:.*;",
+            "MATMSG", "(SUB:.*;)|(subject)", "BODY:.*;", "mailto:",
             "N:.*;", "ADR:.*;", "TEL:.*;", "EMAIL:.*;"};
 
     private Pattern pattern;
@@ -64,6 +65,12 @@ public class DecisionTreeNode {
         this.falseChild = falseChild;
     }
 
+    public DecisionTreeNode getChild(boolean b) {
+        return b ? trueChild : falseChild;
+    }
+
+    public Pattern getPattern() {return this.pattern;}
+
     public static DecisionTreeNode learn(boolean[][] features, String[] outputs, String[] remainAttributes) {
         int numTEXT = 0;
         int numURL = 0;
@@ -71,7 +78,14 @@ public class DecisionTreeNode {
         int numEMAIL = 0;
         int total = features.length;
 
-        if(remainAttributes.length == 0) {
+        boolean sameOutputs = true;
+        String compare = outputs[0];
+        for(String s : outputs) {
+            if(!s.equals(compare)) {
+                sameOutputs = false;
+            }
+        }
+        if(remainAttributes.length == 0 || features.length == 0 || sameOutputs) {
             for(int i = 0; i < total; i++) {
                 if(outputs[i].equals("TEXT")) {
                     numTEXT++;
@@ -208,10 +222,10 @@ public class DecisionTreeNode {
 
     private static double entropy(int numTEXT, int numURL, int numCONTACT, int numEMAIL) {
         int sum = numCONTACT + numEMAIL + numTEXT + numURL;
-        double pTEXT = (double) numTEXT / sum;
-        double pURL = (double) numURL / sum;
-        double pCONTACT = (double) numCONTACT / sum;
-        double pEMAIL = (double) numEMAIL / sum;
+        double pTEXT = (double) numTEXT / sum + 0.0000001;
+        double pURL = (double) numURL / sum + 0.0000001;
+        double pCONTACT = (double) numCONTACT / sum + 0.0000001;
+        double pEMAIL = (double) numEMAIL / sum + 0.0000001;
         return pTEXT * Math.log(1/pTEXT) / Math.log(2) + pURL * Math.log(1/pTEXT) / Math.log(2) +
                 pCONTACT * Math.log(1/pCONTACT) / Math.log(2) + pEMAIL * Math.log(1/pEMAIL) / Math.log(2);
     }
@@ -265,34 +279,24 @@ public class DecisionTreeNode {
         }
     }
 
-//    public String dumpJson() {
-//        if(this.pattern == null) {
-//            return "{\n" +
-//                    "\troot: [\n" +
-//                    "\t\t\"\",\n" +
-//                    "\t\t\"" + this.numTEXT + "\"\n" +
-//                    "\t\t\"" + this.numURL + "\"\n" +
-//                    "\t\t\"" + this.numEMAIL + "\"\n" +
-//                    "\t\t\"" + this.numCONTACT + "\"\n" +
-//                    "\t],\n" +
-//                    "\tchildren: []\n" +
-//                    "}";
-//        } else {
-//            String result = "{\n" +
-//                    "\troot: [\n" +
-//                    "\t\t\"" + this.pattern.pattern() + "\",\n" +
-//                    "\t\t\"" + this.numTEXT + "\"\n" +
-//                    "\t\t\"" + this.numURL + "\"\n" +
-//                    "\t\t\"" + this.numEMAIL + "\"\n" +
-//                    "\t\t\"" + this.numCONTACT + "\"\n" +
-//                    "\t],\n";
-//            String trueChildString = this.trueChild.dumpJson();
-//            String falseChildString = this.falseChild.dumpJson();
-//            return result +
-//                    "\tchildren: [\n" +
-//                    "\t" + trueChildString +
-//                    ",\n\t" + falseChildString +
-//                    "\t\n]\n}";
-//        }
-//    }
+    public void dump() {
+        if(this.pattern == null) {
+            System.out.println("----------");
+            System.out.println("TEXT: " + this.numTEXT);
+            System.out.println("URL: " + this.numURL);
+            System.out.println("EMAIL: " + this.numEMAIL);
+            System.out.println("CONTACT: " + this.numCONTACT);
+            System.out.println("----------");
+        } else {
+            System.out.println("----------");
+            System.out.println("PATTERN: " + this.pattern.pattern());
+            System.out.println("TEXT: " + this.numTEXT);
+            System.out.println("URL: " + this.numURL);
+            System.out.println("EMAIL: " + this.numEMAIL);
+            System.out.println("CONTACT: " + this.numCONTACT);
+            System.out.println("----------");
+            this.trueChild.dump();
+            this.falseChild.dump();
+        }
+    }
 }

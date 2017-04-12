@@ -79,10 +79,12 @@ public class DecisionTreeNode implements Serializable {
         int total = features.length;
 
         boolean sameOutputs = true;
-        String compare = outputs[0];
-        for(String s : outputs) {
-            if(!s.equals(compare)) {
-                sameOutputs = false;
+        if(outputs.length != 0) {
+            String compare = outputs[0];
+            for (String s : outputs) {
+                if (!s.equals(compare)) {
+                    sameOutputs = false;
+                }
             }
         }
         if(remainAttributes.length == 0 || features.length == 0 || sameOutputs) {

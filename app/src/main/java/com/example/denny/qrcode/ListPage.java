@@ -26,7 +26,7 @@ public class ListPage extends AppCompatActivity{
         lvItem = (ListView)findViewById(R.id.listview_item);
         itemList = new ArrayList<>();
 
-        itemList.add(new Item("google", "safe"));
+        
 
         //get data from database
         MyDBHandler dbHelper = new MyDBHandler(this, null ,null, 0);

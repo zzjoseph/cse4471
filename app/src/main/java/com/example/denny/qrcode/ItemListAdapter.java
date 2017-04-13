@@ -46,8 +46,6 @@ public class ItemListAdapter extends BaseAdapter {
         tvName1.setText(itemList.get(position).getUrl());
         tvName2.setText(itemList.get(position).getSafety());
 
-
-
         return v;
     }
 }

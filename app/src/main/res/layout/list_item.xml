@@ -15,6 +15,7 @@
         android:id="@+id/safe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/zxing_result_view"/>
 
 </LinearLayout>

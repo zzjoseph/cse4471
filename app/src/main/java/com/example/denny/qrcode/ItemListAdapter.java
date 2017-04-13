@@ -39,11 +39,14 @@ public class ItemListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.list_item,null);
-        TextView tvName = (TextView)v.findViewById(R.id.item_name);
+        TextView tvName1 = (TextView)v.findViewById(R.id.item_name);
+        TextView tvName2 = (TextView)v.findViewById(R.id.safe);
 
-        tvName.setText(itemList.get(position).getUrl());
 
-        v.setTag(itemList.get(position).getUrl());
+        tvName1.setText(itemList.get(position).getUrl());
+        tvName2.setText(itemList.get(position).getSafety());
+
+
 
         return v;
     }

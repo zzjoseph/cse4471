@@ -100,7 +100,10 @@ public class ReaderActivity extends AppCompatActivity {
                         // add corresponding entry in the database
                         HttpURL checker = new HttpURL();
                         try {
-                            String safe = checker.get(result.getContents());
+                            URL url = new URL(result.getContents());
+                            String parsed = checker.parseURL(url);
+                            Log.d("url", parsed);
+                            String safe = new HttpURL().execute(parsed).get();
                             cacheData cache = new cacheData(result.getContents(), safe);
                             MyDBHandler db = new MyDBHandler(this, null ,null, 0);
                             db.addCache(cache);

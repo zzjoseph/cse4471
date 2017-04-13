@@ -67,7 +67,7 @@ public class ReaderActivity extends AppCompatActivity {
         });
 
         DecisionTreeNode node1 = new DecisionTreeNode(" ", 28, 74, 14, 0);
-        DecisionTreeNode node2 = new DecisionTreeNode("(SUB:.*;)|(subject)", 26, 0, 10, 0);
+        DecisionTreeNode node2 = new DecisionTreeNode("SUB:.*;", 26, 0, 10, 0);
         DecisionTreeNode node3 = new DecisionTreeNode("mailto:", 2, 74, 4, 0);
         DecisionTreeNode node4 = new DecisionTreeNode(null, 0, 0, 10, 0);
         DecisionTreeNode node5 = new DecisionTreeNode(null, 26, 0, 0, 0);

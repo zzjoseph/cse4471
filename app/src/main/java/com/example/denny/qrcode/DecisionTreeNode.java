@@ -36,7 +36,7 @@ public class DecisionTreeNode implements Serializable {
 //    private static final int[] attributes = {ATTR_SPACE, ATTR_HTTP, ATTR_WWW, ATTR_TLD, ATTR_NAME, ATTR_ADDR, ATTR_TEL, ATTR_EMAIL, ATTR_MATMSG, ATTR_BODY, ATTR_SUB};
 
     private static final String[] attributes = {" ", "https?://", "www\\.", "(\\.com)|(\\.org)|(\\.gov)|(\\.net)|(\\.edu)",
-            "MATMSG", "(SUB:.*;)|(subject)", "BODY:.*;", "mailto:",
+            "MATMSG", "SUB:.*;", "BODY:.*;", "mailto:",
             "N:.*;", "ADR:.*;", "TEL:.*;", "EMAIL:.*;"};
 
     private Pattern pattern;

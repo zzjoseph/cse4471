@@ -89,6 +89,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 			Log.d("iiii", eye);
 			if(eye.equals(website)){
 				String stat2 = cur.getString(2);
+				if(stat2 != null) {
 				Log.d("malin",stat2);
 				if(stat2.equals("unknown")){
 					Log.d("malin",stat2);
@@ -104,6 +105,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 					Log.d("malin",stat2);
 					ans = 3;
 					return ans;
+				}
 				}
 			}
 			array[i] = cur.getString(0);

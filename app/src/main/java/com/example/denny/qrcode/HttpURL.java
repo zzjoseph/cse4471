@@ -1,9 +1,13 @@
 package com.example.denny.qrcode;
 
+import android.os.AsyncTask;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import org.json.*;
 
@@ -13,46 +17,63 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Omar Ibrahim on 4/9/2017.
  */
 
-public class HttpURL {
+public class HttpURL extends AsyncTask<String, String, String>{
 
     public static void main(String[] args) throws Exception {
 
         HttpURL http = new HttpURL();
 
-        String webSite = "www.yalakora.com";
-        http.get(webSite);
+        String webSite = "www.fart.com";
+        String safe = http.get();
+        System.out.println(safe);
     }
 
     //Sends an HTTP Get request to the api, and receives answer
-    public String get(String webSite) throws Exception {
+    @Override
+    protected String doInBackground(String... Params){
+        String webSite = Params[0];
         if(!webSite.contains("www.")){
             webSite = "www." + webSite;
         }
-        
+
+        String safe = "";
         System.out.println(webSite);
 
         String url = "http://api.mywot.com/0.4/public_link_json2?hosts=" + webSite + "/&callback=process&key=55c2be73f4b425000dce3874caa04feedf25e417";
 
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        try{
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-        con.setRequestMethod("GET");
+            con.setRequestMethod("GET");
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+            String inputLine;
+            StringBuffer response = new StringBuffer();
 
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            safe = checkSafe(response.toString(), webSite);
+
+            if(con != null){
+                con.disconnect();
+            }
+            if(in != null){
+                in.close();
+            }
         }
-        in.close();
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
 
-        //print result
-        String safe = checkSafe(response.toString(), webSite);
+
         return safe;
-
     }
 
     //Parses the JSON response. Based on info concludes if website is safe.

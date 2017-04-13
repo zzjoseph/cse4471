@@ -36,7 +36,7 @@ public class DecisionTreeNode implements Serializable {
 //    private static final int[] attributes = {ATTR_SPACE, ATTR_HTTP, ATTR_WWW, ATTR_TLD, ATTR_NAME, ATTR_ADDR, ATTR_TEL, ATTR_EMAIL, ATTR_MATMSG, ATTR_BODY, ATTR_SUB};
 
     private static final String[] attributes = {" ", "https?://", "www\\.", "(\\.com)|(\\.org)|(\\.gov)|(\\.net)|(\\.edu)",
-            "MATMSG", "(SUB:.*;)|(subject)", "BODY:.*;", "mailto:",
+            "MATMSG", "SUB:.*;", "BODY:.*;", "mailto:",
             "N:.*;", "ADR:.*;", "TEL:.*;", "EMAIL:.*;"};
 
     private Pattern pattern;
@@ -103,13 +103,15 @@ public class DecisionTreeNode implements Serializable {
             return new DecisionTreeNode(null, numTEXT, numURL, numEMAIL, numCONTACT);
         }
 
-        int bestAttr = 0;
+        int bestIndex = 0;
         double maxInfoGain = 0.0;
         for(int i = 0; i < remainAttributes.length; i++) {
-            double infoGain = DecisionTreeNode.infoGain(i, features, outputs);
-            bestAttr = maxInfoGain <= infoGain ? i : bestAttr;
+            int attrIndex = Arrays.asList(DecisionTreeNode.attributes).indexOf(remainAttributes[i]);
+            double infoGain = DecisionTreeNode.infoGain(attrIndex, features, outputs);
+            bestIndex = maxInfoGain <= infoGain ? i : bestIndex;
             maxInfoGain = maxInfoGain <= infoGain ? infoGain : maxInfoGain;
         }
+        String bestAttr = remainAttributes[bestIndex];
 
         List<boolean[]> trueInputs = new ArrayList<boolean[]>();
         List<String> trueOutputs = new ArrayList<String>();
@@ -127,7 +129,8 @@ public class DecisionTreeNode implements Serializable {
                 numEMAIL++;
             }
 
-            if(features[i][bestAttr]) {
+            int attrIndex = Arrays.asList(DecisionTreeNode.attributes).indexOf(bestAttr);
+            if(features[i][attrIndex]) {
                 trueInputs.add(features[i]);
                 trueOutputs.add(outputs[i]);
             } else {
@@ -139,9 +142,9 @@ public class DecisionTreeNode implements Serializable {
 
         List<String> newAttributes = new ArrayList<String>();
         newAttributes.addAll(Arrays.asList(remainAttributes));
-        newAttributes.remove(bestAttr);
+        newAttributes.remove(remainAttributes[bestIndex]);
 
-        DecisionTreeNode node = new DecisionTreeNode(DecisionTreeNode.attributes[bestAttr], numTEXT, numURL, numEMAIL, numCONTACT);
+        DecisionTreeNode node = new DecisionTreeNode(remainAttributes[bestIndex], numTEXT, numURL, numEMAIL, numCONTACT);
 //
 //        System.out.println("--------------------------------------");
 //        System.out.println("numText: " + numTEXT);
@@ -223,13 +226,13 @@ public class DecisionTreeNode implements Serializable {
 
 
     private static double entropy(int numTEXT, int numURL, int numCONTACT, int numEMAIL) {
-        int sum = numCONTACT + numEMAIL + numTEXT + numURL;
-        double pTEXT = (double) numTEXT / sum + 0.0000001;
-        double pURL = (double) numURL / sum + 0.0000001;
-        double pCONTACT = (double) numCONTACT / sum + 0.0000001;
-        double pEMAIL = (double) numEMAIL / sum + 0.0000001;
-        return pTEXT * Math.log(1/pTEXT) / Math.log(2) + pURL * Math.log(1/pTEXT) / Math.log(2) +
-                pCONTACT * Math.log(1/pCONTACT) / Math.log(2) + pEMAIL * Math.log(1/pEMAIL) / Math.log(2);
+        int sum = numCONTACT + numEMAIL + numTEXT + numURL + 4;
+        double pTEXT = ((double) (numTEXT + 1)) / sum;
+        double pURL = ((double) (numURL + 1)) / sum;
+        double pCONTACT = ((double) (numCONTACT + 1)) / sum;
+        double pEMAIL = ((double) (numEMAIL + 1)) / sum;
+        return -1 * pTEXT * Math.log(pTEXT) / Math.log(2) - pURL * Math.log(pURL) / Math.log(2) -
+                pCONTACT * Math.log(pCONTACT) / Math.log(2) - pEMAIL * Math.log(pEMAIL) / Math.log(2);
     }
 
     private int getSum() {

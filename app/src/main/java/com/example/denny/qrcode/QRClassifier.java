@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class QRClassifier {
     private static final String[] attributes = {" ", "https?://", "www\\.", "(\\.com)|(\\.org)|(\\.gov)|(\\.net)|(\\.edu)",
-            "MATMSG", "(SUB:.*;)|(subject)", "BODY:.*;", "mailto:",
+            "MATMSG", "SUB:.*;", "BODY:.*;", "mailto:",
             "N:.*;", "ADR:.*;", "TEL:.*;", "EMAIL:.*;"};
 
     private DecisionTreeNode decisionTree;
@@ -33,8 +33,8 @@ public class QRClassifier {
 
     public void train() throws IOException {
 
-        boolean[][] features = new boolean[79][attributes.length];
-        String[] outputs = new String[79];
+        boolean[][] features = new boolean[116][attributes.length];
+        String[] outputs = new String[116];
         CSVReader reader = new CSVReader(new FileReader("/home/zz/Documents/cse4471/app/src/main/java/com/example/denny/qrcode/training.csv"));
         String [] nextLine;
 
@@ -67,7 +67,8 @@ public class QRClassifier {
         System.out.println(qr.classify("http://weixin.qq.com/r/56EHH2DE-z2ArSR89-T1"));
         System.out.println(qr.classify("The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed,"));
         System.out.println(qr.classify("Mailto:871239928@qq.com;SUB:http;Body: hey\nhttp represents hypertext transfer protocol"));
-
+        System.out.println(qr.classify("https://www.wolframalpha.com/input/?i=extrema+calculator&rawformassumption=%7B%22F%22,+%22GlobalExtremaCalculator%22,+%22curvefunction%22%7D+-%3E%22-x*log_2(x)-y*log_2(y)-z*log_2(z)-(1-x-y-z)*log_2(1-x-y-z)%22&rawformassumption=%7B%22F%22,+%22GlobalExtremaCalculator%22,+%22domain%22%7D+-%3E%220%3Cx%3C1%22"));
+        System.out.println(qr.classify("http is hypertext transfer protocol. www is world wide web. send a email to me. Subject is computer science."));
         qr.decisionTree.dump();
 
     }

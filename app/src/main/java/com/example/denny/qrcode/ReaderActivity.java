@@ -26,6 +26,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
+import java.net.URL;
 import java.sql.BatchUpdateException;
 import java.util.List;
 
@@ -66,17 +67,23 @@ public class ReaderActivity extends AppCompatActivity {
             }
         });
 
-        DecisionTreeNode node1 = new DecisionTreeNode("mailto:", 4, 18, 3, 0);
-        DecisionTreeNode node2 = new DecisionTreeNode(null, 0, 0, 2, 0);
-        DecisionTreeNode node3 = new DecisionTreeNode("(SUB:.*;)|(subject)", 4, 18, 1, 0);
-        DecisionTreeNode node4 = new DecisionTreeNode(null, 0, 0, 1, 0);
-        DecisionTreeNode node5 = new DecisionTreeNode(" ", 4, 18, 0, 0);
-        DecisionTreeNode node6 = new DecisionTreeNode(null, 4, 0, 0, 0);
-        DecisionTreeNode node7 = new DecisionTreeNode(null, 0, 18, 0, 0);
+        DecisionTreeNode node1 = new DecisionTreeNode(" ", 28, 74, 14, 0);
+        DecisionTreeNode node2 = new DecisionTreeNode("SUB:.*;", 26, 0, 10, 0);
+        DecisionTreeNode node3 = new DecisionTreeNode("mailto:", 2, 74, 4, 0);
+        DecisionTreeNode node4 = new DecisionTreeNode(null, 0, 0, 10, 0);
+        DecisionTreeNode node5 = new DecisionTreeNode(null, 26, 0, 0, 0);
+        DecisionTreeNode node6 = new DecisionTreeNode(null, 0, 0, 4, 0);
+        DecisionTreeNode node7 = new DecisionTreeNode("(\\.com)|(\\.org)|(\\.gov)|(\\.net)|(\\.edu)", 2, 74, 0, 0);
+        DecisionTreeNode node8 = new DecisionTreeNode(null, 0, 72, 0, 0);
+        DecisionTreeNode node9 = new DecisionTreeNode("https?://", 2, 2, 0, 0);
+        DecisionTreeNode node10 = new DecisionTreeNode(null, 0, 2, 0, 0);
+        DecisionTreeNode node11 = new DecisionTreeNode(null, 2, 0, 0, 0);
 
         node1.setChildren(node2, node3);
-        node3.setChildren(node4, node5);
-        node5.setChildren(node6, node7);
+        node2.setChildren(node4, node5);
+        node3.setChildren(node6, node7);
+        node7.setChildren(node8, node9);
+        node9.setChildren(node10, node11);
         this.classifier = new QRClassifier();
         this.classifier.setTree(node1);
     }

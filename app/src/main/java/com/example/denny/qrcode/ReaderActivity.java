@@ -94,7 +94,6 @@ public class ReaderActivity extends AppCompatActivity {
                 String tag = this.classifier.classify(result.getContents());
                 if(tag.equals("URL")) {
                     MyDBHandler dbHandler = new MyDBHandler(this, null, null, 0);
-                    if(dbHandler.isInTable(tag) == 0) {
 
                         // use api to check if url is safe
                         // add corresponding entry in the database
@@ -102,21 +101,26 @@ public class ReaderActivity extends AppCompatActivity {
                         try {
                             URL url = new URL(result.getContents());
                             String parsed = checker.parseURL(url);
-                            Log.d("url", parsed);
-                            String safe = new HttpURL().execute(parsed).get();
-                            cacheData cache = new cacheData(result.getContents(), safe);
-                            MyDBHandler db = new MyDBHandler(this, null ,null, 0);
-                            db.addCache(cache);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else if(dbHandler.isInTable(tag) == 1) {
-                        Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
-                    } else if(dbHandler.isInTable(tag) == 2) {
-                        Toast.makeText(this, "Safe URL: \n" + resultText, Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(this, "Unsafe URL: \n" + resultText, Toast.LENGTH_LONG).show();
-                    }
+                            String test = dbHandler.isInTable(parsed) + "";
+                            Log.d("url", test);
+
+                            if(dbHandler.isInTable(parsed) == 0) {
+                                String safe = new HttpURL().execute(parsed).get();
+                                cacheData cache = new cacheData(parsed, safe);
+                                MyDBHandler db = new MyDBHandler(this, null ,null, 0);
+                                db.addCache(cache);
+                                Toast.makeText(this, safe + " \n" + resultText, Toast.LENGTH_LONG).show();
+
+                            } else if(dbHandler.isInTable(parsed) == 1) {
+                                Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
+                            } else if(dbHandler.isInTable(parsed) == 2) {
+                                Toast.makeText(this, "Safe URL: \n" + resultText, Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(this, "Unsafe URL: \n" + resultText, Toast.LENGTH_LONG).show();
+                            }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                 } else if(tag.equals("TEXT")) {
                     Toast.makeText(this, "Text: \n" + resultText, Toast.LENGTH_LONG).show();
                 } else if(tag.equals("EMAIL")) {

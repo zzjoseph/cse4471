@@ -33,8 +33,8 @@ public class QRClassifier {
 
     public void train() throws IOException {
 
-        boolean[][] features = new boolean[79][attributes.length];
-        String[] outputs = new String[79];
+        boolean[][] features = new boolean[116][attributes.length];
+        String[] outputs = new String[116];
         CSVReader reader = new CSVReader(new FileReader("/home/zz/Documents/cse4471/app/src/main/java/com/example/denny/qrcode/training.csv"));
         String [] nextLine;
 

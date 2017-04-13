@@ -24,13 +24,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db){
 		Log.d("Debug", "create db");
-		String query = "CREATE TABLE " + TABLE_CACHE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WEB + " TEXT, " + COLUMN_MAL + " TEXT );";
+		String query = "CREATE TABLE " + TABLE_CACHE + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_WEB + " TEXT, " + COLUMN_MAL + " TEXT " + ");";
 		db.execSQL(query);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-		db.execSQL("DROP TABLE IF EXISTS" + TABLE_CACHE);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CACHE);
 		onCreate(db);
 	}
 
@@ -38,6 +38,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 	public void addCache(cacheData cache){
 		ContentValues values = new ContentValues();
 		values.put(COLUMN_WEB, cache.get_webname());
+		values.put(COLUMN_MAL, cache.get_malicious());
 		SQLiteDatabase db = getWritableDatabase();
 		db.insert(TABLE_CACHE, null, values);
 		db.close();
@@ -53,7 +54,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 	public String dbString(){
 		String dbString = "";
 		SQLiteDatabase db = getWritableDatabase();
-		String query = "SELECT * FROM " + TABLE_CACHE + "WHERE 1";
+		String query = "SELECT * FROM " + TABLE_CACHE + " WHERE 1";
 
 		Cursor cur = db.rawQuery(query, null);
 		cur.moveToFirst();
@@ -72,25 +73,45 @@ public class MyDBHandler extends SQLiteOpenHelper{
 	//Returns if website is in cache and status of website if in cache.
 	//0, not in cache, 1 unknown, 2 safe, 3 unsafe
 	public int isInTable(String website){
+		Log.d("webazooo", website);
 		int ans;
 		SQLiteDatabase db = getReadableDatabase();
-		String query = "SELECT * FROM " + TABLE_CACHE + " WHERE " + COLUMN_WEB + " = \"" + website + "\";";
+		String query = "SELECT * FROM " + TABLE_CACHE + " WHERE 1";
 		Cursor cur = db.rawQuery(query, null);
-		if(cur == null){
-			ans = 0;
+		String count = cur.getColumnCount() + "";
+		Log.d("debug",count);
+		String array[] = new String[cur.getCount()];
+		int i = 0;
+
+		cur.moveToFirst();
+		while (!cur.isAfterLast()) {
+			String eye = cur.getString(1);
+			Log.d("iiii", eye);
+			if(eye.equals(website)){
+				String stat2 = cur.getString(2);
+				Log.d("malin",stat2);
+				if(stat2.equals("unknown")){
+					Log.d("malin",stat2);
+					ans = 1;
+					return ans;
+				}
+				else if(stat2.equals("safe")){
+					Log.d("malin",stat2);
+					ans = 2;
+					return ans;
+				}
+				else{
+					Log.d("malin",stat2);
+					ans = 3;
+					return ans;
+				}
+			}
+			array[i] = cur.getString(0);
+			i++;
+			cur.moveToNext();
 		}
-		else{
-			String stat = cur.getString(cur.getColumnIndex("malicious"));
-			if(stat.equals("unknown")){
-				ans = 1;
-			}
-			else if(stat.equals("safe")){
-				ans = 2;
-			}
-			else{
-				ans = 3;
-			}
-		}
+
+		ans = 0;
 		return ans;
 	}
 }

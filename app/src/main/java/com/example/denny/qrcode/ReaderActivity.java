@@ -129,7 +129,24 @@ public class ReaderActivity extends AppCompatActivity {
                                 Toast.makeText(this, safe + " \n" + resultText, Toast.LENGTH_LONG).show();
 
                             } else if(dbHandler.isInTable(parsed) == 1) {
-                                Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
+                                AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+                                myAlert.setMessage("Would you like to browse this URL?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        openWebURL(resultText);
+                                    }
+                                })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setTitle("URL Safetly is Unknown!")
+                                        .create();
+                                myAlert.show();
+
+                                //Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
                             } else if(dbHandler.isInTable(parsed) == 2) {
                                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
                                 myAlert.setMessage("Would you like to browse this URL?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {

@@ -126,7 +126,23 @@ public class ReaderActivity extends AppCompatActivity {
                                 cacheData cache = new cacheData(parsed, safe);
                                 MyDBHandler db = new MyDBHandler(this, null ,null, 0);
                                 db.addCache(cache);
-                                Toast.makeText(this, safe + " \n" + resultText, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(this, safe + " \n" + resultText, Toast.LENGTH_LONG).show();
+                                AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+                                myAlert.setMessage("Would you like to browse this URL?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        openWebURL(resultText);
+                                    }
+                                })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setTitle(safe+" URL!")
+                                        .create();
+                                myAlert.show();
 
                             } else if(dbHandler.isInTable(parsed) == 1) {
                                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
@@ -142,7 +158,7 @@ public class ReaderActivity extends AppCompatActivity {
                                                 dialog.dismiss();
                                             }
                                         })
-                                        .setTitle("URL Safetly is Unknown!")
+                                        .setTitle("URL Safety is Unknown!")
                                         .create();
                                 myAlert.show();
 

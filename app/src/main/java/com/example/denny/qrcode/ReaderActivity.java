@@ -126,24 +126,26 @@ public class ReaderActivity extends AppCompatActivity {
                                 cacheData cache = new cacheData(parsed, safe);
                                 MyDBHandler db = new MyDBHandler(this, null ,null, 0);
                                 db.addCache(cache);
-                                //Toast.makeText(this, safe + " \n" + resultText, Toast.LENGTH_LONG).show();
-                                AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
-                                myAlert.setMessage("Would you like to browse this URL?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        openWebURL(resultText);
-                                    }
-                                })
-                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .setTitle(safe+" URL!")
-                                        .create();
-                                myAlert.show();
-
+                                if(safe == "unsafe"){
+                                    Toast.makeText(this, "Unsafe URL: \n" + resultText, Toast.LENGTH_LONG).show();
+                                }else {
+                                    AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+                                    myAlert.setMessage("Would you like to browse this URL?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            openWebURL(resultText);
+                                        }
+                                    })
+                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .setTitle("URL Safety: "+safe+"!")
+                                            .create();
+                                    myAlert.show();
+                                }
                             } else if(dbHandler.isInTable(parsed) == 1) {
                                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
                                 myAlert.setMessage("Would you like to browse this URL?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -158,11 +160,9 @@ public class ReaderActivity extends AppCompatActivity {
                                                 dialog.dismiss();
                                             }
                                         })
-                                        .setTitle("URL Safety is Unknown!")
+                                        .setTitle("URL Safety: unknown!")
                                         .create();
                                 myAlert.show();
-
-                                //Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
                             } else if(dbHandler.isInTable(parsed) == 2) {
                                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
                                 myAlert.setMessage("Would you like to browse this URL?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -177,11 +177,9 @@ public class ReaderActivity extends AppCompatActivity {
                                                 dialog.dismiss();
                                             }
                                         })
-                                        .setTitle("Safe URL!")
+                                        .setTitle("URL Safety: safe!")
                                         .create();
                                 myAlert.show();
-                                //Toast.makeText(this, "Safe URL: \n" + resultText, Toast.LENGTH_LONG).show();
-
                             } else {
                                 Toast.makeText(this, "Unsafe URL: \n" + resultText, Toast.LENGTH_LONG).show();
                             }

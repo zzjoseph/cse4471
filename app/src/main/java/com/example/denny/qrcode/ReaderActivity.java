@@ -2,8 +2,11 @@ package com.example.denny.qrcode;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,6 +91,12 @@ public class ReaderActivity extends AppCompatActivity {
         this.classifier.setTree(node1);
     }
 
+    public void openWebURL( String inURL ) {
+        Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse( inURL ) );
+
+        startActivity( browse );
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -96,7 +105,7 @@ public class ReaderActivity extends AppCompatActivity {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
             }
             else {
-                String resultText = result.getContents();
+                final String resultText = result.getContents();
 
 
                 String tag = this.classifier.classify(result.getContents());
@@ -122,7 +131,24 @@ public class ReaderActivity extends AppCompatActivity {
                             } else if(dbHandler.isInTable(parsed) == 1) {
                                 Toast.makeText(this, "URL Safety Unknown: \n" + resultText, Toast.LENGTH_LONG).show();
                             } else if(dbHandler.isInTable(parsed) == 2) {
-                                Toast.makeText(this, "Safe URL: \n" + resultText, Toast.LENGTH_LONG).show();
+                                AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+                                myAlert.setMessage("Would you like to browse this URL?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        openWebURL(resultText);
+                                    }
+                                })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setTitle("Safe URL!")
+                                        .create();
+                                myAlert.show();
+                                //Toast.makeText(this, "Safe URL: \n" + resultText, Toast.LENGTH_LONG).show();
+
                             } else {
                                 Toast.makeText(this, "Unsafe URL: \n" + resultText, Toast.LENGTH_LONG).show();
                             }
